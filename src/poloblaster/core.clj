@@ -28,6 +28,14 @@
 (defn sendmail [[pair ticker]]
   (try
     (p/send-message
+     {:host "smtp.example.com"
+      :user "user"
+      :pass "pass"
+      :ssl true}
+     {:from "sender@address.com"
+      :to "number@address.com"
+      :subject (str pair)
+      :body (str (:rate ticker))})
     (catch Exception ex
       (println (.getMessage ex)))))
 
