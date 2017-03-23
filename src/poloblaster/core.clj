@@ -19,25 +19,23 @@
     (reset! stop true))))
 
 (defn get-ticker [conn pair]
-  (let [c (bs/follow! conn pair)]
-    [pair (<!! c)]))
+  (try
+    (let [c (bs/follow! conn pair)]
+      [pair (<!! c)])
+    (catch Exception e
+      (println (.getMessage e)))))
 
 (defn sendmail [[pair ticker]]
-  (p/send-message
-   {:host "smtp.example.com"
-    :user "user"
-    :pass "pass"
-    :ssl true}
-   {:from "sender@addr.com"
-    :to "number@addr.net"
-    :subject (str pair)
-    :body (str (:rate ticker))}))
+  (try
+    (p/send-message
+    (catch Exception ex
+      (println (.getMessage ex)))))
 
 (defn send-rates-loop []
   (loop []
     (when (not @stop)
       (let [conn @(bs/connect!)
-            tickers (into {} (map (partial get-ticker conn) pairs))]
+            tickers (into {} (remove nil? (map (partial get-ticker conn) pairs)))]
         (doall (map sendmail tickers))
         (java.lang.Thread/sleep 900000)
         (recur)))))
