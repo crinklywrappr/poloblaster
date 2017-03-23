@@ -1,0 +1,9 @@
+{
+  :host "smtp.example.com"
+  :user "user" 
+  :pass "pass"
+  :ssl true 
+  :from "username@example.com"
+  :to "1234567890"
+  :time "900000"
+}
