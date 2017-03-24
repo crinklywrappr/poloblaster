@@ -6,4 +6,5 @@
   :from "username@example.com"
   :to "1234567890"
   :interval "900000"
+  :pairs [[:USDT :ETH][:USDT :XMR][:USDT :XRP][:BTC :XRP][:BTC :BURST]]
 }
