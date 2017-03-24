@@ -7,11 +7,7 @@
 
 (def stop (atom false))
 
-(def pairs [[:USDT :ETH]
-            [:USDT :XMR]
-            [:USDT :XRP]
-            [:BTC :XRP]
-            [:BTC :BURST]])
+(def pairs (:pairs env))
 
 (.addShutdownHook
  (Runtime/getRuntime)
